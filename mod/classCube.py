@@ -53,7 +53,7 @@ class Cube:
             self.movement = (0, self.speed)
 
     def draw(self,background):
-        background.blit(self.img[self.state[2]-1],(self.center[0] - self.dim/2, self.center[1] - self.dim/2))
+        background.blit(self.img[self.state[2]-1],(self.center[0] - self.dim//2, self.center[1] - self.dim//2))
 
     def move(self, cell):
         cx, cy = cell.center
@@ -89,6 +89,6 @@ class Cube:
             self.speed -= 1
 
     def getDiceSide(self):
-        return self.state[2];
+        return self.state[2]
 
 

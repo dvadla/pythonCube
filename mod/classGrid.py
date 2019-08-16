@@ -1,13 +1,13 @@
 import pygame
 import random as rd
 
-from classCube import Cube
+from mod.classCube import Cube
 
 class  Cell:
     def __init__(self, i, j, x, y, dim):
         self.index = (i, j)
         self.center = (x, y)
-        self.corner = (x - dim/2, y - dim/2)
+        self.corner = (x - dim//2, y - dim//2)
         self.dim = dim
         self.isObjective = False
         self.value = None
@@ -20,27 +20,27 @@ class Grid:
 
     def __init__(self, screenWidth, screenHeight, cellNum):    
         self.gridDim = screenWidth if screenWidth < screenHeight else screenHeight
-        self.cellDim = self.gridDim/cellNum    
+        self.cellDim = self.gridDim // cellNum    
         self.cellNum = cellNum
 
         self.bounds = {
-            "left":     (screenWidth - self.gridDim)/2,
-            "right":    screenWidth - (screenWidth - self.gridDim)/2,
-            "top":      (screenHeight - self.gridDim)/2,
-            "bottom":   screenHeight - (screenHeight - self.gridDim)/2,
+            "left":     (screenWidth - self.gridDim)//2,
+            "right":    screenWidth - (screenWidth - self.gridDim)//2,
+            "top":      (screenHeight - self.gridDim)//2,
+            "bottom":   screenHeight - (screenHeight - self.gridDim)//2,
         }   
 
         self.cellsArray = []
         for i in range(0, cellNum):
             centersLine = []
             for j in range(0, cellNum):
-                centersLine.append( ( Cell(i, j, (j*self.cellDim + self.cellDim/2 + self.bounds["left"]), (i*self.cellDim + self.cellDim/2 + self.bounds["top"]), self.cellDim) ) )
+                centersLine.append( ( Cell(i, j, (j*self.cellDim + self.cellDim//2 + self.bounds["left"]), (i*self.cellDim + self.cellDim//2 + self.bounds["top"]), self.cellDim) ) )
             self.cellsArray.append(centersLine)
 
-        self.player = Cube(self.cellsArray[cellNum/2][cellNum/2], self.cellDim)
+        self.player = Cube(self.cellsArray[cellNum//2][cellNum//2], self.cellDim)
 
-        self.currentTarget = self.cellsArray[cellNum/2][cellNum/2]
-        self.nextTarget = self.cellsArray[cellNum/2][cellNum/2]
+        self.currentTarget = self.cellsArray[cellNum//2][cellNum//2]
+        self.nextTarget = self.cellsArray[cellNum//2][cellNum//2]
 
         self.maxObjectives = 1
         self.numObjectives = 0
@@ -114,13 +114,13 @@ class Grid:
 
     def getPlayerCell(self):
         x, y = self.player.center
-        return self.cellsArray[(y - self.bounds["top"]) / self.cellDim][(x - self.bounds["left"]) / self.cellDim]
+        return self.cellsArray[(y - self.bounds["top"]) // self.cellDim][(x - self.bounds["left"]) // self.cellDim]
 
     def movePlayer(self):
         if self.player.move(self.currentTarget) == True:
             i, j  = self.currentTarget.index
-            index1 = i + self.player.movement[1] / self.player.speed
-            index2 = j + self.player.movement[0] / self.player.speed
+            index1 = i + self.player.movement[1] // self.player.speed
+            index2 = j + self.player.movement[0] // self.player.speed
             self.currentTarget = self.nextTarget
             try:
                 self.nextTarget = self.cellsArray[index1][index2]

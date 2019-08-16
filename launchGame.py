@@ -16,6 +16,7 @@ pygame.init()
 surface = pygame.display.set_mode((screenWidth,screenHeight))
 pygame.display.set_caption('Cube turning prototype')
 clock = pygame.time.Clock()
+pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 def replay_or_quit():
     for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP, pygame.QUIT]):
@@ -35,11 +36,11 @@ def msgSurface(text, surface):
     largeText = pygame.font.Font('freesansbold.ttf', 80)
 
     titleTextSurf, titleTextRect = makeTextObjs(text, largeText)
-    titleTextRect.center = screenWidth/2, screenHeight/2
+    titleTextRect.center = screenWidth//2, screenHeight//2
     surface.blit(titleTextSurf, titleTextRect)
 
     typTextSurf, typTextRect = makeTextObjs('Press any key to continue', smallText)
-    typTextRect.center = screenWidth/2, screenHeight/2 + 200
+    typTextRect.center = screenWidth//2, screenHeight//2 + 200
     surface.blit(typTextSurf, typTextRect)
 
     pygame.display.update()
@@ -81,6 +82,9 @@ def main():
                         myGrid.inputBack()
                     if event.key == pygame.K_RIGHT:
                         myGrid.inputRight()
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        quit()
             #refresh parameters and draw
             surface.fill(colorBlack)
             myGrid.movePlayer()
